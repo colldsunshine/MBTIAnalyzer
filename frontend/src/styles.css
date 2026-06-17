@@ -1,0 +1,841 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:wght@400;500;600&display=swap');
+
+:root {
+    --bg: #f7f5f0;
+    --sidebar: #f1ede6;
+    --text: #252422;
+    --muted: #7f786e;
+    --line: #e5ddd2;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+}
+
+/* =========================
+   LAYOUT
+========================= */
+
+.layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar {
+    width: 320px;
+    min-width: 320px;
+
+    padding: 32px;
+
+    border-right: 1px solid var(--line);
+
+    background: var(--sidebar);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    position: sticky;
+    top: 0;
+
+    height: 100vh;
+}
+
+.logo {
+    font-size: 48px;
+    line-height: 1;
+
+    font-family: 'Cormorant Garamond', serif;
+}
+
+.sidebar-sub {
+    margin-top: 8px;
+
+    font-size: 12px;
+    letter-spacing: 0.08em;
+
+    color: var(--muted);
+}
+
+.questions-nav {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+
+    margin: 42px 0;
+}
+
+/* =========================
+   NAV ITEM
+========================= */
+
+.nav-item {
+    border: none;
+    background: none;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: flex-start;
+
+    gap: 14px;
+
+    width: 100%;
+
+    padding: 18px 18px;
+
+    border-radius: 20px;
+
+    transition:
+            background 0.2s ease,
+            transform 0.2s ease;
+
+    text-align: left;
+}
+
+.nav-item:hover {
+    background: #ebe5db;
+}
+
+.active-nav {
+    background: #e2dbcf;
+}
+
+.nav-left {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 14px;
+
+    flex: 1;
+
+    min-width: 0;
+}
+
+/* ТЕКСТ ВОПРОСА */
+
+.nav-left span {
+    flex: 1;
+
+    min-width: 0;
+
+    text-align: left;
+
+    line-height: 1.35;
+
+    font-size: 17px;
+    font-weight: 400;
+
+    color: #252422;
+
+    word-break: break-word;
+}
+
+/* КРУЖОК */
+
+.nav-dot {
+    width: 10px;
+    height: 10px;
+
+    min-width: 10px;
+    min-height: 10px;
+
+    border-radius: 50%;
+
+    border: 1.5px solid #999;
+
+    margin-top: 7px;
+
+    flex-shrink: 0;
+}
+
+.nav-dot.filled {
+    background: #7E7845;
+    border-color: #7E7845;
+}
+
+/* НОМЕР */
+
+.nav-index {
+    font-size: 14px;
+
+    opacity: 0.55;
+
+    flex-shrink: 0;
+
+    margin-top: 2px;
+
+    color: #6f6b66;
+}
+
+.sidebar-footer {
+    font-size: 13px;
+    line-height: 1.7;
+
+    color: var(--muted);
+}
+
+/* =========================
+   CONTENT
+========================= */
+
+.content {
+    flex: 1;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 48px;
+}
+
+.question-wrapper {
+    width: 100%;
+    max-width: 820px;
+}
+
+/* =========================
+   PROGRESS
+========================= */
+
+.progress {
+    width: 100%;
+    height: 6px;
+
+    background: #e7dfd4;
+
+    border-radius: 999px;
+
+    overflow: hidden;
+
+    margin-bottom: 40px;
+}
+
+.progress-fill {
+    height: 100%;
+
+    background: #252422;
+
+    transition: width 0.3s ease;
+}
+
+/* =========================
+   QUESTION
+========================= */
+
+.question-label {
+    font-size: 12px;
+
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+
+    color: #7E7845;
+
+    margin-bottom: 18px;
+}
+
+.question-title {
+    font-size: 56px;
+    line-height: 1;
+
+    margin: 0 0 24px;
+
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+}
+
+.question-desc {
+    font-size: 18px;
+    line-height: 1.8;
+
+    color: #403d38;
+
+    margin-bottom: 36px;
+}
+
+/* =========================
+   TEXTAREA
+========================= */
+
+textarea {
+    width: 100%;
+    min-height: 220px;
+
+    border: none;
+    outline: none;
+
+    resize: none;
+
+    border-radius: 20px;
+
+    padding: 24px;
+
+    background: white;
+
+    font-size: 16px;
+    line-height: 1.8;
+
+    color: #252422;
+
+    box-shadow:
+            0 1px 2px rgba(0,0,0,0.03),
+            0 8px 30px rgba(0,0,0,0.04);
+
+    transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+}
+
+textarea:focus {
+    transform: translateY(-1px);
+
+    box-shadow:
+            0 2px 6px rgba(0,0,0,0.04),
+            0 12px 36px rgba(0,0,0,0.06);
+}
+
+textarea::placeholder {
+    color: #9a948b;
+}
+
+/* =========================
+   ACTIONS
+========================= */
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+
+    margin-top: 28px;
+}
+
+.main-btn,
+.ghost-btn {
+    height: 52px;
+
+    padding: 0 24px;
+
+    border-radius: 14px;
+
+    border: none;
+
+    cursor: pointer;
+
+    font-weight: 600;
+
+    transition:
+            transform 0.2s ease,
+            opacity 0.2s ease,
+            background 0.2s ease;
+}
+
+.main-btn {
+    background: #252422;
+    color: white;
+}
+
+.main-btn:hover {
+    transform: translateY(-1px);
+    opacity: 0.94;
+}
+
+.ghost-btn {
+    background: white;
+
+    border: 1px solid var(--line);
+
+    color: #252422;
+}
+
+.ghost-btn:hover {
+    background: #f4f0e9;
+}
+
+.error {
+    margin-top: 20px;
+
+    color: #8a3f3f;
+}
+
+/* =========================
+   RESULTS
+========================= */
+
+.results {
+    max-width: 1100px;
+
+    margin: 0 auto;
+
+    padding: 80px 32px 120px;
+
+    position: relative;
+}
+
+.results::before {
+    content: "";
+
+    position: absolute;
+
+    width: 520px;
+    height: 520px;
+
+    top: -120px;
+    right: -180px;
+
+    background:
+            radial-gradient(
+                    circle,
+                    rgba(83,78,110,0.10) 0%,
+                    rgba(83,78,110,0) 72%
+            );
+
+    pointer-events: none;
+
+    z-index: 0;
+}
+
+.report-container {
+    position: relative;
+    z-index: 1;
+}
+
+/* =========================
+   RESULT TYPE
+========================= */
+
+.result-type {
+    font-size: 150px;
+    line-height: 0.9;
+
+    text-align: center;
+
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+
+    letter-spacing: 0.04em;
+
+    margin-bottom: 18px;
+}
+
+.result-type::after {
+    content: "psychological archetype";
+
+    display: block;
+
+    margin-top: 18px;
+
+    font-size: 12px;
+
+    letter-spacing: 0.28em;
+
+    text-transform: uppercase;
+
+    font-family: 'Inter', sans-serif;
+
+    color: var(--muted);
+}
+
+/* =========================
+   ANALYTICS
+========================= */
+
+.analytics-section {
+    margin: 70px 0 60px;
+
+    padding: 42px;
+
+    background: rgba(255,255,255,0.55);
+
+    backdrop-filter: blur(8px);
+
+    border: 1px solid rgba(255,255,255,0.7);
+
+    border-radius: 32px;
+
+    box-shadow: 0 10px 40px rgba(0,0,0,0.04);
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 34px;
+}
+
+.scale {
+    display: flex;
+    flex-direction: column;
+}
+
+.scale-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 12px;
+
+    font-size: 17px;
+}
+
+.scale-head span:nth-child(2) {
+    font-size: 14px;
+    color: var(--muted);
+}
+
+.scale-track {
+    height: 7px;
+
+    background: #e6dfd5;
+
+    border-radius: 999px;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.scale-track::after {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 1px;
+    height: 16px;
+
+    background: #cfc5b7;
+
+    transform: translate(-50%, -50%);
+}
+
+.scale-fill {
+    position: absolute;
+    top: 0;
+
+    height: 100%;
+}
+
+.scale-fill.right {
+    left: 50%;
+}
+
+.scale-fill.left {
+    right: 50%;
+}
+
+/* =========================
+   PORTRAIT
+========================= */
+
+.portrait-section {
+    margin-top: 20px;
+
+    background: white;
+
+    border-radius: 36px;
+
+    padding: 56px;
+
+    box-shadow: 0 10px 40px rgba(0,0,0,0.035);
+
+    border: 1px solid #ede7de;
+}
+
+.portrait-section h1,
+.portrait-section h2,
+.portrait-section h3 {
+    font-family: 'Cormorant Garamond', serif;
+
+    font-weight: 500;
+
+    line-height: 1.1;
+
+    margin-top: 42px;
+    margin-bottom: 22px;
+}
+
+.portrait-section h1 {
+    font-size: 54px;
+}
+
+.portrait-section h2 {
+    font-size: 42px;
+}
+
+.portrait-section h3 {
+    font-size: 30px;
+}
+
+.portrait-section p {
+    font-size: 18px;
+
+    line-height: 2;
+
+    color: #3e3a35;
+
+    margin-bottom: 24px;
+}
+
+.portrait-section strong {
+    font-weight: 600;
+    color: #252422;
+}
+
+/* =========================
+   DOWNLOAD BUTTON
+========================= */
+
+.print-button-wrapper {
+    display: flex;
+    justify-content: center;
+
+    margin-top: 48px;
+    margin-bottom: 20px;
+}
+
+.download-btn {
+    border: none;
+
+    background: #252422;
+    color: white;
+
+    height: 52px;
+
+    padding: 0 32px;
+
+    border-radius: 14px;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+            transform 0.2s ease,
+            opacity 0.2s ease;
+
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.download-btn:hover {
+    transform: translateY(-2px);
+    opacity: 0.95;
+}
+
+/* =========================
+   PRINT
+========================= */
+
+@media print {
+
+    @page {
+        size: A4;
+        margin: 18mm;
+    }
+
+    * {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    body {
+        background: white;
+    }
+
+    .print-button-wrapper {
+        display: none !important;
+    }
+
+    .results {
+        max-width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+    .results::before {
+        display: none;
+    }
+
+    .report-container {
+        width: 100%;
+    }
+
+    .result-type {
+        font-size: 72pt;
+        margin-bottom: 24px;
+    }
+
+    .analytics-section {
+        break-inside: avoid;
+        page-break-inside: avoid;
+
+        margin: 30px 0;
+
+        border: 1px solid #e8dfd2;
+
+        box-shadow: none;
+
+        backdrop-filter: none;
+
+        background: #faf8f4;
+    }
+
+    .portrait-section {
+        border: none;
+
+        box-shadow: none;
+
+        padding: 0;
+
+        margin-top: 40px;
+    }
+
+    .portrait-section h1,
+    .portrait-section h2,
+    .portrait-section h3 {
+        break-after: avoid;
+        page-break-after: avoid;
+    }
+
+    .portrait-section p {
+        font-size: 13pt;
+
+        line-height: 1.8;
+
+        color: #1f1f1f;
+
+        orphans: 3;
+        widows: 3;
+    }
+
+    .scale {
+        break-inside: avoid;
+    }
+
+    .scale-track {
+        height: 10px;
+    }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 960px) {
+
+    .layout {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        position: relative;
+
+        width: 100%;
+        min-width: 100%;
+
+        height: auto;
+
+        border-right: none;
+        border-bottom: 1px solid var(--line);
+    }
+
+    .content {
+        padding: 28px 18px 48px;
+    }
+
+    .question-title {
+        font-size: 42px;
+    }
+
+    .question-desc {
+        font-size: 16px;
+    }
+
+    .result-type {
+        font-size: 82px;
+    }
+
+    .analytics-section {
+        padding: 28px 22px;
+
+        border-radius: 24px;
+    }
+
+    .portrait-section {
+        padding: 32px 24px;
+
+        border-radius: 24px;
+    }
+
+    .portrait-section p {
+        font-size: 16px;
+        line-height: 1.9;
+    }
+}
+
+/* AI-портрет хедер */
+.ai-portrait-header {
+    margin: 32px 0 16px 0;
+    padding: 16px 20px;
+    background-color: #f8f6f2;
+    border-radius: 12px;
+    border-left: 4px solid #7E7845;
+}
+
+.ai-label {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2c2a24;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ai-icon {
+    font-size: 22px;
+}
+
+.ai-disclaimer-note {
+    font-size: 13px;
+    color: #6b685f;
+    line-height: 1.4;
+}
+
+/* Юридический дисклеймер */
+.legal-disclaimer {
+    margin-top: 32px;
+    padding-top: 16px;
+}
+
+.legal-text {
+    font-size: 11px;
+    color: #9b9689;
+    line-height: 1.5;
+    text-align: justify;
+}
+
+/* Дисклеймер в сайдбаре */
+.disclaimer-note {
+    font-size: 10px;
+    color: #9b9689;
+    margin-top: 12px;
+    line-height: 1.4;
+}
