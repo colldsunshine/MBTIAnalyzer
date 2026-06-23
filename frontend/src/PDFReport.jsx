@@ -24,7 +24,6 @@ Font.register({
     ],
 });
 
-// Стили для PDF (единый стиль для всех шкал)
 const styles = StyleSheet.create({
     page: {
         padding: 40,
@@ -72,13 +71,13 @@ const styles = StyleSheet.create({
     },
     fill: {
         height: 6,
-        backgroundColor: '#7E7845', // базовый цвет, может переопределяться
+        backgroundColor: '#7E7845',
     },
     portrait: {
         marginTop: 40,
         fontSize: 11,
         lineHeight: 1.6,
-        whiteSpace: 'pre-wrap',   // сохраняет пробелы и переносы строк
+        whiteSpace: 'pre-wrap',
         color: '#252422',
     },
     sectionHeader: {
@@ -90,36 +89,30 @@ const styles = StyleSheet.create({
     },
 });
 
-// Вспомогательная функция для очистки markdown (опционально)
 const cleanMarkdown = (text) => {
     if (!text) return '';
-    // Убираем маркеры заголовков (#, ##, ###) и жирный текст (**), но сохраняем содержимое
     return text
-        .replace(/^#+\s+/gm, '')      // убираем заголовки markdown
-        .replace(/\*\*(.*?)\*\*/g, '$1') // убираем **жирный**
-        .replace(/\*(.*?)\*/g, '$1');    // убираем *курсив*
+        .replace(/^#+\s+/gm, '')
+        .replace(/\*\*(.*?)\*\*/g, '$1')
+        .replace(/\*(.*?)\*/g, '$1');
 };
 
 export const PDFReport = ({ result, answers }) => {
-    // Шкалы: левая метка, правая метка, значение (0–100)
     const scales = [
-        { left: 'Интроверсия', right: 'Экстраверсия', value: result.percent.E },
-        { left: 'Сенсорика',   right: 'Интуиция',     value: result.percent.N },
-        { left: 'Этика',       right: 'Логика',       value: result.percent.T },
-        { left: 'Иррациональность', right: 'Рациональность', value: result.percent.J },
+        { left: 'Introversion', right: 'Extraversion', value: result.percent.E },
+        { left: 'Sensing', right: 'Intuition', value: result.percent.N },
+        { left: 'Feeling', right: 'Thinking', value: result.percent.T },
+        { left: 'Perceiving', right: 'Judging', value: result.percent.J },
     ];
 
-    // Обработка текста портрета (сохраняем разрывы строк)
     const portraitText = cleanMarkdown(result.portrait || '');
 
     return (
         <Document>
             <Page size="A4" style={styles.page}>
-                {/* Тип личности */}
                 <Text style={styles.type}>{result.mbti_type}</Text>
-                <Text style={styles.title}>Психологический портрет</Text>
+                <Text style={styles.title}>Psychological Portrait</Text>
 
-                {/* Все 4 шкалы */}
                 {scales.map((scale, idx) => (
                     <View key={idx} style={styles.scaleContainer}>
                         <View style={styles.scaleRow}>
@@ -138,15 +131,13 @@ export const PDFReport = ({ result, answers }) => {
                     </View>
                 ))}
 
-                {/* Текст портрета с сохранением структуры */}
                 <View style={styles.portrait}>
                     <Text>{portraitText}</Text>
                 </View>
 
-                {/* Можно добавить дополнительную информацию, например, исходные ответы (по желанию) */}
                 {answers && answers.length > 0 && (
                     <>
-                        <Text style={styles.sectionHeader}>Ваши ответы</Text>
+                        <Text style={styles.sectionHeader}>Your answers</Text>
                         {answers.map((ans, i) => (
                             <Text key={i} style={{ fontSize: 9, marginBottom: 6, whiteSpace: 'pre-wrap' }}>
                                 {ans}
