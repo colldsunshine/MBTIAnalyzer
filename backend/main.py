@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import sys
 import locale
+import os
 
 locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 sys.stdout.reconfigure(encoding='utf-8')
@@ -27,7 +28,7 @@ MODEL_NAME = "cointegrated/rubert-tiny2"
 WEIGHTS_PATH = "./mbti_final_stage2.bin"
 MAX_LEN = 512
 
-GIGACHAT_AUTH_TOKEN = "MDE5Y2M0MzgtZTVjNS03ODczLWIxYmMtMDliZTEwMzA2NmU1OmRkNDQ4NzcxLTc4NjgtNDZiMC1hZDAwLWVkOGVhNWI2OGNmMg=="
+GIGACHAT_AUTH_TOKEN = os.getenv("GIGACHAT_TOKEN", "")
 
 THRESHOLDS = {"E": 0.63, "N": 0.66, "T": 0.48, "J": 0.57}
 ORDER = ["E", "N", "T", "J"]
@@ -109,16 +110,12 @@ def probs_to_type(probs: np.ndarray) -> str:
 
 
 def normalize_prob(prob: float, threshold: float) -> float:
-    """Нормализует вероятность так, чтобы порог всегда был равен 0.5"""
     if prob < threshold:
         return 0.5 * (prob / threshold)
     else:
         return 0.5 + 0.5 * ((prob - threshold) / (1.0 - threshold))
 
 
-# -------------------
-# API
-# -------------------
 app = FastAPI(title="MBTI Backend")
 
 app.add_middleware(
@@ -167,15 +164,12 @@ def analyze(req: AnalyzeRequest) -> Dict[str, Any]:
 
     mbti_type = probs_to_type(probs)
 
-    # 1. Скрываем реальные пороги: нормализуем под 50%
     norm_percent = {}
     for i, dim in enumerate(ORDER):
         norm_percent[dim] = round(normalize_prob(float(probs[i]), THRESHOLDS[dim]) * 100, 1)
 
-    # 2. Генерируем описание через GigaChat
-    # Если токен не вставлен, отдаем заглушку
-    if GIGACHAT_AUTH_TOKEN == "ТВОЙ_КЛЮЧ_ИЗ_КАБИНЕТА":
-        portrait = "Для получения развернутого психологического портрета укажите API-ключ GigaChat в настройках бэкенда."
+    if not GIGACHAT_AUTH_TOKEN:
+        portrait = "Для получения развернутого психологического портрета укажите API-ключ GigaChat в переменной окружения GIGACHAT_TOKEN."
     else:
         prompt = f"""
         Ты — профессиональный психолог, специализирующийся на типологии личности MBTI.
@@ -219,7 +213,7 @@ def analyze(req: AnalyzeRequest) -> Dict[str, Any]:
                 response = giga.chat(prompt)
                 portrait = response.choices[0].message.content
         except Exception as e:
-            print(f"Ошибка GigaChat: {e}")
+            print(f"GigaChat error: {e}")
             portrait = "К сожалению, не удалось связаться с языковой моделью для генерации подробного описания."
 
     return {
