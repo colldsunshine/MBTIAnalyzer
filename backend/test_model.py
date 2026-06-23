@@ -183,12 +183,12 @@ TEST_CASES = [
 
 def test_model():
     print("\n" + "="*60)
-    print("ТЕСТИРОВАНИЕ МОДЕЛИ MBTI_BERT")
+    print("TESTING MBTI_BERT MODEL")
     print("="*60)
 
     for i, test in enumerate(TEST_CASES, 1):
         print(f"\n{'='*60}")
-        print(f"Тест {i}: {test['name']}")
+        print(f"Test {i}: {test['name']}")
         print(f"{'='*60}")
 
         payload = {
@@ -196,7 +196,7 @@ def test_model():
             "free_text": test["free_text"]
         }
 
-        print("\n📝 Вопросы и ответы:")
+        print("\nQuestions and answers:")
         for j, ans in enumerate(test["answers"], 1):
             print(f"   Q{j}: {ans[:80]}{'...' if len(ans) > 80 else ''}")
         print(f"   FREE: {test['free_text'][:80]}{'...' if len(test['free_text']) > 80 else ''}")
@@ -210,26 +210,26 @@ def test_model():
 
             if response.status_code == 200:
                 result = response.json()
-                print(f"\n🎯 Результат:")
-                print(f"   MBTI тип: {result['mbti_type']}")
-                print(f"\n   Проценты по шкалам (нормализованные, порог=50%):")
-                print(f"   E (Экстраверсия): {result['percent']['E']}%")
-                print(f"   N (Интуиция):      {result['percent']['N']}%")
-                print(f"   T (Логика):        {result['percent']['T']}%")
-                print(f"   J (Рациональность): {result['percent']['J']}%")
-                print(f"\n📖 Психологический портрет (первые 500 символов):")
+                print(f"\nResult:")
+                print(f"   MBTI type: {result['mbti_type']}")
+                print(f"\n   Normalized percentages (threshold=50%):")
+                print(f"   E (Extraversion): {result['percent']['E']}%")
+                print(f"   N (Intuition):    {result['percent']['N']}%")
+                print(f"   T (Thinking):     {result['percent']['T']}%")
+                print(f"   J (Judging):      {result['percent']['J']}%")
+                print(f"\nPsychological portrait (first 500 chars):")
                 print(f"   {result['portrait'][:500]}...")
             else:
-                print(f"❌ Ошибка: HTTP {response.status_code}")
+                print(f"Error: HTTP {response.status_code}")
 
         except requests.exceptions.ConnectionError:
-            print("❌ Ошибка: Сервер не запущен! Запустите сначала:")
+            print("Error: Server not running. Start with:")
             print("   uvicorn main:app --reload")
         except Exception as e:
-            print(f"❌ Ошибка: {e}")
+            print(f"Error: {e}")
 
         print("\n" + "-"*40)
-        input("Нажмите Enter для следующего теста...")
+        input("Press Enter for next test...")
 
 if __name__ == "__main__":
     test_model()
